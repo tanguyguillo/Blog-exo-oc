@@ -2,7 +2,7 @@
 
 // We connect to the database.
 try {
-    $database = new PDO('mysql:host=localhost;dbname=blog-exo-oc;charset=utf8', 'blog', 'password');
+    $database = new PDO('mysql:host=localhost;dbname=blog-exo-oc;charset=utf8', 'blog-exo-oc', 'blog-exo-oc');
 } catch(Exception $e) {
     die('Erreur : '.$e->getMessage());
 }
