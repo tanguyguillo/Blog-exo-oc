@@ -1,39 +1,75 @@
-# Adoptez une architecture MVC en PHP
+[![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub) [![Latest Stable Version](https://poser.pugx.org/jetbrains/phpstorm-workshop/v/stable.png)](https://packagist.org/packages/jetbrains/phpstorm-workshop) [![Total Downloads](https://poser.pugx.org/jetbrains/phpstorm-workshop/downloads.png)](https://packagist.org/packages/jetbrains/phpstorm-workshop) [![License](https://poser.pugx.org/jetbrains/phpstorm-workshop/license.png)](https://packagist.org/packages/jetbrains/phpstorm-workshop)
 
-Voici le dépôt Git qui sert de support au cours **Adoptez une architecture MVC en PHP**. À partir de ce dépôt, vous pourrez récupérer le code source, situé dans le dossier `blog/`, à chaque étape de l'avancement du projet.
+# PhpStorm Workshop
 
-Nous vous fournissons une liste de liens Github, dans la section [Étapes](#etapes) de ce document, vers chacune des étapes _précédentes_. Aussi, pour trouver une étape future, vous devrez obligatoirement repasser par la [dernière étape](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php). Si vous souhaitez naviguer dans les étapes directement depuis votre dépôt local, sachez que ce dépôt utilise l'[étiquettage Git](https://git-scm.com/book/fr/v2/Les-bases-de-Git-%C3%89tiquetage) pour définir chaque étape.
+In these materials, you'll learn about many of the features and productivity tools available in [PhpStorm](http://www.jetbrains.com/phpstorm). Examples are navigation, editing, inspections, live templates, refactoring, tools like Composer and the HTTP client, and many more. It's virtually impossible to cover every option and feature in PhpStorm, but we're providing a number of practical exercises on how we can do our daily work as PHP developers.
 
-Ce document vous fournira aussi quelques astuces et informations sur la manière d'installer le projet.
+We'll also cover a vast amount of keyboard shortcuts to make working with PhpStorm more efficient. Other IntelliJ-based IDE's use the same keyboard shortcuts, so if you know how to work with PhpStorm, you'll know how to work with WebStorm, RubyMine, PyCharm, IntelliJ IDEA and more. A [cheat sheet is available online](http://bit.ly/1Ni0XJ0) and is also included in the workshop download.
 
-## Étapes
+This workshop is self-paced, meaning you can work your way through exercises on your own, whenever and wherever you want. Exercises come as a PhpStorm project in which every file is a new exercise that may contain code and tips to get things done.
 
-* [Appréhendez les limites d'un code de débutant](https://github.com/OpenClassrooms-Student-Center/4670706-architecture-mvc-php/tree/apprehendez-limites-code-debutant)
+## Prerequisites
 
-## Installation
+* Docker for Mac, Docker for Windows or Docker (Linux) 1.13+. See [Docker documentation](https://docs.docker.com/install/) for installation instructions for your operating system. 
+* PhpStorm 2016.3+
 
-### Prérequis
+## Getting the Project
 
-Tout d'abord, ce projet est fait pour fonctionner avec les dernières versions de PHP (actuellement `^8.0`). Il vous faudra donc l'installer sur votre machine.
+There are several ways to get started with the PhpStorm workshop materials:
 
-De plus, ce projet nécessite l'utilisation d'une base de données MySQL. Vous devrez donc installer ET configurer votre base de données, et créer un utilisateur. Si vous voulez vous rafraîchir la mémoire, vous pouvez relire le chapitre [Mettez en place une base de données avec phpMyAdmin](https://openclassrooms.com/fr/courses/918836-concevez-votre-site-web-avec-php-et-mysql/913893-mettez-en-place-une-base-de-donnees-avec-phpmyadmin) ! Par défaut, l'application utilise une base de données dénommée `blog`, accessible à un utilisateur `blog` dont le mot de passe est `password`.
+* Create a new PhpStorm Workshop Project in PhpStorm
 
-### Configuration
+* Create a new project with Composer. Note that you can also create a new project in PhpStorm: use the *Composer* project type and search for "jetbrains/phpstorm-workshop"
 
-Une fois que vous avez installé votre serveur MySQL, vous pouvez remplacer les identifiants utilisés dans le code par les votre. Dans le fichier `blog/index.php`, à la ligne 17 :
+    `php composer.phar create-project jetbrains/phpstorm-workshop -s dev`
 
-```php
-$bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'blog', 'password');
-```
+* Clone the project from GitHub
 
-Vous devriez aussi remplir votre base de données. Vous pouvez charger le schéma par défaut (et quelques données), contenu dans le fichier `db.sql`. Pour ce faire, vous pouvez utiliser votre interface d'administration MySQL, ou bien lancer la commande suivante, si vous êtes sous Linux :
+    `git clone https://github.com/JetBrains/phpstorm-workshop.git`
+    
+    `git checkout docker`
 
-```bash
-mysql -ublog -p blog < db.sql
-```
+* Download the ZIP
 
-### Lancement
+    `wget https://github.com/JetBrains/phpstorm-workshop/archive/docker.zip`
+    
+## Getting Started
 
-Vous pouvez utiliser le serveur web intégré à PHP pour lancer ce projet. Placez vous dans le dossier `blog/`, puis lancez la commande `php -S localhost:8080` (vous pouvez choisir le port que vous souhaitez si `8080` est déjà utilisé).
+Most exercises not related to the code editor require having Docker containers running. 
 
-Alternativement, et si vous avez une _stack_ WAMP ou LAMP installée, vous pouvez configurer votre serveur Apache pour qu'il gère le dossier `blog/`.
+Before you start:
+
+1. Open *Settings/Preferences | Build, Execution, Deployment | Docker* and select how to connect to the Docker daemon:
+
+    * Windows:  
+        * Select *TCP socket*.
+        * Set *Engine API URL* to *tcp://localhost:2375*.
+        * Leave the *Certificates folder* field empty.
+            
+        Make sure to enable *Expose daemon on tcp://localhost:2375 without TLS* in the *General* section of Docker for Windows settings.
+        
+    * macOS: 
+        
+        * Select *Docker for Mac*
+    
+    * Linux:
+        * Select *Unix socket*
+
+2. Update `XDEBUG_CONFIG` variable in `docker-compose.yml` with the value depending on your operating system. This is necessary for Web Debugging.
+    
+    * Windows/macOS: use `host.docker.internal`, which will automatically resolve to the internal address of the host Docker is running on.
+    * Linux: execute `hostname` in Terminal and use the returned value.
+
+3. Uncomment an appropriate line for `sftp` service in the same `docker-compose.yml`. This is necessary for Deployment to work correctly.
+
+4. In the same `docker-compose.yml`, click the *Run* icon next to `services:` in the editor gutter to start all required Docker containers. Alternatively, you can open the built-in PhpStorm terminal from *View | Tool Windows | Terminal* and execute the `docker-compose up` command.
+
+There are some things to know about the project:
+
+* The project can be opened as is in PhpStorm. We've included configurations for PHP Remote Interpreter, Database, Deployment Server, PHP Web Debug, PHPUnit and Behat.
+* All numbered folders contain exercises that you can work on. Simply open the numbered files one by one and follow the comments in the file. Most exercises are self-contained, others build on previous exercises.
+* Some of the exercises (like this one) are in *Markdown* format. You can read these files easier by toggling *View* to *Show Preview Only* in the top-right corner.
+* The `PhpStorm Reference Card.pdf` is the PhpStorm keymap. The latest version can always be found on the [PhpStorm website](http://bit.ly/1Ni0XJ0).
+
+## Open Source and Contribution
+The workshop is Open Source, licensed under the Apache 2 license. If you would like to contribute to the workshop materials, please feel free to fork the repo and send us a pull request. Or if you have a comment, question, or suggestion for improvements, please [raise an issue](https://github.com/JetBrains/phpstorm-workshop/issues).
