@@ -2,11 +2,11 @@
 <?php
 
 function getPosts() {
-    // We connect to the database.
-    try {
-        $database = new PDO('mysql:host=localhost;dbname=blog-exo-oc;charset=utf8', 'blog-exo-oc', 'blog-exo-oc');
-    } catch(Exception $e) {
-        die('Erreur : '.$e->getMessage());
+        // We connect to the database.
+        try {
+            $database = new PDO('mysql:host=localhost;dbname=blog-exo-oc;charset=utf8', 'blog-exo-oc', 'blog-exo-oc');
+        } catch(Exception $e) {
+            die('Erreur : '.$e->getMessage());
     }
 
     // We retrieve the 5 last blog posts.
