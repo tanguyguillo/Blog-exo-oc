@@ -14,7 +14,7 @@
       // Connexion à la base de données
       try
       {
-          $bdd = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'blog', 'password');
+          $bdd = new PDO('mysql:host=localhost;Blog-exo-oc=blog;charset=utf8', 'Blog-exo-oc', 'Blog-exo-oc');
       }
       catch(Exception $e){
             die( 'Erreur : '.$e->getMessage()   );
