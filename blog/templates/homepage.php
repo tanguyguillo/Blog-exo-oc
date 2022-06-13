@@ -11,6 +11,8 @@
 <p>Derniers billets du blog :</p>
 
 <?php
+
+
 foreach ($posts as $post) {
     ?>
     <div class="news">
@@ -21,7 +23,8 @@ foreach ($posts as $post) {
         <p>
             <?= nl2br(htmlspecialchars($post['content'])); ?>
             <br />
-            <em><a href="#">Commentaires</a></em>
+
+            <em><a href="post.php?id=<?= urlencode($post['identifier']) ?>">Commentaires</a></em>
         </p>
     </div>
     <?php
